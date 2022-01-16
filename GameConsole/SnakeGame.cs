@@ -47,33 +47,77 @@ namespace GameConsole
         }
         public void SnakeMove()
         {
-            for (int i = snakeLength; i >= 1; i--)
-            {
-                snakeX[i] = snakeX[i - 1];
-                snakeY[i] = snakeY[i - 1];
-            }
             if (moveAngle == 1) //virsus
             {
-                snakeX[0] = snakeX[0];
-                snakeY[0] = snakeY[0] - 1;
+                SnakeBody[0].x = SnakeBody[0].x;
+                SnakeBody[0].y = SnakeBody[0].y - 1;
             }
             if (moveAngle == 2)//desine
             {
-                snakeX[0] = snakeX[0] + 1;
-                snakeY[0] = snakeY[0];
+                SnakeBody[0].x = SnakeBody[0].x + 1;
+                SnakeBody[0].y = SnakeBody[0].y;
             }
             if (moveAngle == 3)//apacia
             {
-                snakeX[0] = snakeX[0];
-                snakeY[0] = snakeY[0] + 1;
+                SnakeBody[0].x = SnakeBody[0].x;
+                SnakeBody[0].y = SnakeBody[0].y + 1;
             }
             if (moveAngle == 4)//kaire
             {
-                snakeX[0] = snakeX[0] - 1;
-                snakeY[0] = snakeY[0];
+                SnakeBody[0].x = SnakeBody[0].x - 1;
+                SnakeBody[0].y = SnakeBody[0].y;
+            }
+            for (int i = snakeLength; i >= 0; i--)
+            {
+                SnakeBody[i].x = SnakeBody[i-1].x;
+                SnakeBody[i].y = SnakeBody[i-1].y;
             }
         }
-        public void AppleSpawn()
+        private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)//fixed
+        {
+            bool canMove = true;
+            while (!Death())
+            {
+                if (canMove)
+                {
+                    switch (e.KeyCode)
+                    {
+                        case Keys.W:
+                            if (moveAngle != 3)
+                            {
+                                moveAngle = 1;
+                                canMove = false;
+                            }
+                            break;
+                        case Keys.S:
+                            if (moveAngle != 1)
+                            {
+                                moveAngle = 3;
+                                canMove = false;
+                            }
+                            break;
+                        case Keys.A:
+                            if (moveAngle != 2)
+                            {
+                                moveAngle = 4;
+                                canMove = false;
+                            }
+                            break;
+                        case Keys.D:
+                            if (moveAngle != 4)
+                            {
+                                moveAngle = 2;
+                                canMove = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                canMove = true;
+            }
+        }
+        private void AppleSpawn()//fixed
         {
             if (isAppleOnMap == false)
             {
@@ -85,7 +129,7 @@ namespace GameConsole
                 {
                     for (int i = 0; i <= snakeLength; i++)
                     {
-                        if (appleX == snakeX[i] && appleY == snakeY[i])
+                        if (appleX == SnakeBody[i].x && appleY == SnakeBody[i].y)
                         {
                             appleX = (byte)rnd.Next(1, mapX);
                             appleY = (byte)rnd.Next(1, mapY);
@@ -109,26 +153,22 @@ namespace GameConsole
                 }
             }
         }
-        public void SnakeEat()
+        private void SnakeEat()//fixed
         {
-            if (snakeX[0] == appleX && snakeY[0] == appleY)
+            if (SnakeBody[0].x == appleX && SnakeBody[0].y == appleY)
             {
-                snakeX.Add(snakeX[snakeLength]);
-                snakeY.Add(snakeY[snakeLength]);
+                SnakeBody.Add(new SnakeCell(SnakeBody[snakeLength].x, SnakeBody[snakeLength].x, snakeLength));
                 snakeLength++;
                 isAppleOnMap = false;
             }
         }
-        public void SnakeSpawn()
+        private void SnakeSpawn()//fixed
         {
             snakeLength = 1;
             moveAngle = 1;
-            arYraOb = false;
-            snakeX.Add(mapX / 2);
-            snakeY.Add(mapY - 1);
-
-            snakeX.Add(snakeX[0]);
-            snakeY.Add(snakeY[0] + 1);
+            isAppleOnMap = false;
+            SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 1, 0));
+            SnakeBody.Add(new SnakeCell(SnakeBody[0].x, SnakeBody[0].y + 1, 1));
 
             for (int y = 0; y <= mapY + 1; y++)
             {
@@ -157,9 +197,30 @@ namespace GameConsole
                 }
             }
         }
-        public void DrawMap()
+        private bool Death()//fixed
         {
-            
+            bool result = false;
+            if (SnakeBody[0].x <= 0 || SnakeBody[0].x > mapX || SnakeBody[0].y <= 0 || SnakeBody[0].y > mapY)
+            {
+                result = true;
+            }
+            for (int i = 1; i <= snakeLength; i++)
+            {
+                if (SnakeBody[0].x == SnakeBody[i].x && SnakeBody[0].y == SnakeBody[i].y)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+        private void Lose()//fixed
+        {
+            MessageBox.Show($"You lost! Your score: {snakeLength}");
+            Application.Exit();
+        }
+        private void DrawMap()//reuse and delete
+        {
+
             for (int y = 0; y <= mapY + 1; y++)
             {
                 for (int x = 0; x <= mapX + 1; x++)
@@ -242,71 +303,6 @@ namespace GameConsole
                         }
                     }
                 }
-            }
-        }
-        public bool Death()
-        {
-            bool result = false;
-            if (snakeX[0] <= 0 || snakeX[0] > mapX || snakeY[0] <= 0 || snakeY[0] > mapY)
-            {
-                result = true;
-            }
-            for (int i = 1; i <= snakeLength; i++)
-            {
-                if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i])
-                {
-                    result = true;
-                }
-            }
-            return result;
-        }
-        public void Lose()
-        {
-            MessageBox.Show($"You lost! Your score: {snakeLength}");
-            Application.Exit();
-        }
-        private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            bool canMove = true;
-            while (!Death())
-            {
-                if (canMove)
-                {
-                    switch (e.KeyCode)
-                    {
-                        case Keys.W:
-                            if (moveAngle != 3)
-                            {
-                                moveAngle = 1;
-                                canMove = false;
-                            }
-                            break;
-                        case Keys.S:
-                            if (moveAngle != 1)
-                            {
-                                moveAngle = 3;
-                                canMove = false;
-                            }
-                            break;
-                        case Keys.A:
-                            if (moveAngle != 2)
-                            {
-                                moveAngle = 4;
-                                canMove = false;
-                            }
-                            break;
-                        case Keys.D:
-                            if (moveAngle != 4)
-                            {
-                                moveAngle = 2;
-                                canMove = false;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                canMove = true;
             }
         }
     }
