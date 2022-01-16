@@ -16,7 +16,7 @@ namespace GameConsole
         byte mapY = 15;
         byte appleX;
         byte appleY;
-        short snakeLength;
+        int snakeLength;
         List<SnakeCell> SnakeBody = new List<SnakeCell>();
         byte moveAngle;
         bool isAppleOnMap;
@@ -31,49 +31,54 @@ namespace GameConsole
         private void SnakeGame_Load(object sender, EventArgs e)
         {
             GameTimer.Enabled = true;
-            GameTimer.Interval = 200;
+            GameTimer.Interval = 2000;
             SnakeSpawn();
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            if (!Death())
-            {
+            //if (!Death())
+            //{
                 AppleSpawn();
                 SnakeMove();
                 SnakeEat();
-                DrawMap();
-            }
-            else { GameTimer.Enabled = false; }
+                this.Controls.Clear();
+                DrawSnake();
+           // }
+            //else
+            //{
+               // GameTimer.Enabled = false;
+               // Lose();
+            //}
         }
         public void SnakeMove()
         {
-            if (moveAngle == 1) //virsus
+            if (moveAngle == 1) //up
             {
                 SnakeBody[0].x = SnakeBody[0].x;
                 SnakeBody[0].y = SnakeBody[0].y - 1;
             }
-            if (moveAngle == 2)//desine
+            if (moveAngle == 2)//right
             {
                 SnakeBody[0].x = SnakeBody[0].x + 1;
                 SnakeBody[0].y = SnakeBody[0].y;
             }
-            if (moveAngle == 3)//apacia
+            if (moveAngle == 3)//down
             {
                 SnakeBody[0].x = SnakeBody[0].x;
                 SnakeBody[0].y = SnakeBody[0].y + 1;
             }
-            if (moveAngle == 4)//kaire
+            if (moveAngle == 4)//left
             {
                 SnakeBody[0].x = SnakeBody[0].x - 1;
                 SnakeBody[0].y = SnakeBody[0].y;
             }
-            for (int i = snakeLength; i >= 0; i--)
+            for (int i = snakeLength; i >= 1; i--)
             {
-                SnakeBody[i].x = SnakeBody[i-1].x;
-                SnakeBody[i].y = SnakeBody[i-1].y;
+                SnakeBody[i].x = SnakeBody[i - 1].x;
+                SnakeBody[i].y = SnakeBody[i - 1].y;
             }
         }
-        private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)//fixed
+        private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             bool canMove = true;
             while (!Death())
@@ -117,7 +122,7 @@ namespace GameConsole
                 canMove = true;
             }
         }
-        private void AppleSpawn()//fixed
+        private void AppleSpawn()
         {
             if (isAppleOnMap == false)
             {
@@ -153,23 +158,23 @@ namespace GameConsole
                 }
             }
         }
-        private void SnakeEat()//fixed
+        private void SnakeEat()
         {
             if (SnakeBody[0].x == appleX && SnakeBody[0].y == appleY)
             {
-                SnakeBody.Add(new SnakeCell(SnakeBody[snakeLength].x, SnakeBody[snakeLength].x, snakeLength));
+                SnakeBody.Add(new SnakeCell(SnakeBody[snakeLength].x, SnakeBody[snakeLength].x));
                 snakeLength++;
                 isAppleOnMap = false;
             }
         }
-        private void SnakeSpawn()//fixed
+        private void SnakeSpawn()
         {
-            snakeLength = 1;
+            snakeLength = 2;
             moveAngle = 1;
             isAppleOnMap = false;
-            SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 1, 0));
-            SnakeBody.Add(new SnakeCell(SnakeBody[0].x, SnakeBody[0].y + 1, 1));
-
+            SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 3));
+            SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 2));
+            SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 1));
             for (int y = 0; y <= mapY + 1; y++)
             {
                 for (int x = 0; x <= mapX + 1; x++)
@@ -197,7 +202,7 @@ namespace GameConsole
                 }
             }
         }
-        private bool Death()//fixed
+        private bool Death()
         {
             bool result = false;
             if (SnakeBody[0].x <= 0 || SnakeBody[0].x > mapX || SnakeBody[0].y <= 0 || SnakeBody[0].y > mapY)
@@ -213,96 +218,175 @@ namespace GameConsole
             }
             return result;
         }
-        private void Lose()//fixed
+        private void Lose()
         {
             MessageBox.Show($"You lost! Your score: {snakeLength}");
             Application.Exit();
         }
-        private void DrawMap()//reuse and delete
+        private void DrawSnake()
         {
-
-            for (int y = 0; y <= mapY + 1; y++)
+            if (moveAngle == 1) //up
             {
-                for (int x = 0; x <= mapX + 1; x++)
+                var HeadUp = new PictureBox
                 {
-                    bool arYraSnk = false;
-                    for (int i = 1; i <= snakeLength; i++)
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[0].x * 50, SnakeBody[0].y * 50),
+                    Image = Image.FromFile($@"{path}\headUp.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(HeadUp);
+            }
+            else if (moveAngle == 2)//right
+            {
+                var HeadRight = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[0].x * 50, SnakeBody[0].y * 50),
+                    Image = Image.FromFile($@"{path}\headRight.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(HeadRight);
+            }
+            else if (moveAngle == 3)//down
+            {
+                var HeadDown = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[0].x * 50, SnakeBody[0].y * 50),
+                    Image = Image.FromFile($@"{path}\headDown.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(HeadDown);
+            }
+            else if (moveAngle == 4)//left
+            {
+                var HeadLeft = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[0].x * 50, SnakeBody[0].y * 50),
+                    Image = Image.FromFile($@"{path}\headLeft.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(HeadLeft);
+            }
+            for (int i = 1; i < snakeLength; i++)
+            {
+                //checks if nearby cell is occupied
+                bool upCell = ((SnakeBody[i].x == SnakeBody[i - 1].x) && (SnakeBody[i].y + 1 == SnakeBody[i - 1].y)) || ((SnakeBody[i].x == SnakeBody[i + 1].x) && (SnakeBody[i].y + 1 == SnakeBody[i + 1].y));
+                bool downCell = ((SnakeBody[i].x == SnakeBody[i - 1].x) && (SnakeBody[i].y - 1 == SnakeBody[i - 1].y)) || ((SnakeBody[i].x == SnakeBody[i + 1].x) && (SnakeBody[i].y - 1 == SnakeBody[i + 1].y));
+                bool leftCell = ((SnakeBody[i].x - 1 == SnakeBody[i - 1].x) && (SnakeBody[i].y == SnakeBody[i - 1].y)) || ((SnakeBody[i].x - 1 == SnakeBody[i + 1].x) && (SnakeBody[i].y == SnakeBody[i + 1].y));
+                bool rightCell = ((SnakeBody[i].x + 1 == SnakeBody[i - 1].x) && (SnakeBody[i].y == SnakeBody[i - 1].y)) || ((SnakeBody[i].x + 1 == SnakeBody[i + 1].x) && (SnakeBody[i].y == SnakeBody[i + 1].y));
+
+                    //horizontal sprite
+                    if (rightCell && leftCell)
                     {
-                        if (y == snakeY[i] && x == snakeX[i])
+                        var Horizontal = new PictureBox
                         {
-                            arYraSnk = true;
-                            break;
-                        }
-                        else
-                        {
-                            arYraSnk = false;
-                        }
-                    }
-                    else if (arYraSnk)
-                    {
-                        var Body = new PictureBox
-                        {
-                            BackColor = Color.Green,
                             Size = new Size(50, 50),
-                            Location = new Point(x * 50, y * 50),
-                            //Image = Image.FromFile($@"{path}\apple.png"),
+                            Location = new Point(SnakeBody[i].x * 50, SnakeBody[i].y * 50),
+                            Image = Image.FromFile($@"{path}\horizontal.png"),
                             SizeMode = PictureBoxSizeMode.StretchImage,
                         };
-                        this.Controls.Add(Body);
+                        this.Controls.Add(Horizontal);
                     }
-                    else if (y == snakeY[0] && x == snakeX[0])
+                    //vertical sprite
+                    else if (upCell && downCell)
                     {
-                        switch (moveAngle)
+                        var Vertical = new PictureBox
                         {
-                            case 1:
-                                var HeadUp = new PictureBox
-                                {
-                                    BackColor = Color.DarkGreen,
-                                    Size = new Size(50, 50),
-                                    Location = new Point(x * 50, y * 50),
-                                    //Image = Image.FromFile($@"{path}\Thead.png"),
-                                    SizeMode = PictureBoxSizeMode.StretchImage,
-                                };
-                                this.Controls.Add(HeadUp);
-                                break;
-                            case 2:
-                                var HeadRight = new PictureBox
-                                {
-                                    BackColor = Color.DarkGreen,
-                                    Size = new Size(50, 50),
-                                    Location = new Point(x * 50, y * 50),
-                                    //Image = Image.FromFile($@"{path}\Rhead.png"),
-                                    SizeMode = PictureBoxSizeMode.StretchImage,
-                                };
-                                this.Controls.Add(HeadRight);
-                                break;
-                            case 3:
-                                var HeadDown = new PictureBox
-                                {
-                                    BackColor = Color.DarkGreen,
-                                    Size = new Size(50, 50),
-                                    Location = new Point(x * 50, y * 50),
-                                    SizeMode = PictureBoxSizeMode.StretchImage,
-                                    //Image = Image.FromFile($@"{path}\Bhead.png"),
-                                };
-                                this.Controls.Add(HeadDown);
-                                break;
-                            case 4:
-                                var HeadLeft = new PictureBox
-                                {
-                                    BackColor = Color.DarkGreen,
-                                    Size = new Size(50, 50),
-                                    Location = new Point(x * 50, y * 50),
-                                    //Image = Image.FromFile($@"{path}\Lhead.png"),
-                                    SizeMode = PictureBoxSizeMode.StretchImage,
-                                };
-                                this.Controls.Add(HeadLeft);
-                                break;
-                            default:
-                                break;
-                        }
+                            Size = new Size(50, 50),
+                            Location = new Point(SnakeBody[i].x * 50, SnakeBody[i].y * 50),
+                            Image = Image.FromFile($@"{path}\vertical.png"),
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                        };
+                        this.Controls.Add(Vertical);
                     }
-                }
+                    //up left sprite
+                    else if (upCell && leftCell)
+                    {
+                        var turnUpLeft = new PictureBox
+                        {
+                            Size = new Size(50, 50),
+                            Location = new Point(SnakeBody[i].x * 50, SnakeBody[i].y * 50),
+                            Image = Image.FromFile($@"{path}\turnUpLeft.png"),
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                        };
+                        this.Controls.Add(turnUpLeft);
+                    }
+                    //up right sprite
+                    else if (upCell && rightCell)
+                    {
+                        var turnUpRight = new PictureBox
+                        {
+                            Size = new Size(50, 50),
+                            Location = new Point(SnakeBody[i].x * 50, SnakeBody[i].y * 50),
+                            Image = Image.FromFile($@"{path}\turnUpRight.png"),
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                        };
+                        this.Controls.Add(turnUpRight);
+                    }
+                    //down left sprite
+                    else if (downCell && leftCell)
+                    {
+                        var turnDownLeft = new PictureBox
+                        {
+                            Size = new Size(50, 50),
+                            Location = new Point(SnakeBody[i].x * 50, SnakeBody[i].y * 50),
+                            Image = Image.FromFile($@"{path}\turnDownLeft.png"),
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                        };
+                        this.Controls.Add(turnDownLeft);
+                    }
+                    //down right sprite
+            }
+            int sl = snakeLength;
+            bool upTail = ((SnakeBody[sl].x == SnakeBody[sl - 1].x) && (SnakeBody[sl].y + 1 == SnakeBody[sl - 1].y));
+            bool downTail = ((SnakeBody[sl].x == SnakeBody[sl - 1].x) && (SnakeBody[sl].y - 1 == SnakeBody[sl - 1].y));
+            bool leftTail = ((SnakeBody[sl].x - 1 == SnakeBody[sl - 1].x) && (SnakeBody[sl].y == SnakeBody[sl - 1].y));
+            bool rightTail = ((SnakeBody[sl].x + 1 == SnakeBody[sl - 1].x) && (SnakeBody[sl].y == SnakeBody[sl - 1].y));
+            if (upTail)
+            {
+                var tailUp = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[sl].x * 50, SnakeBody[sl].y * 50),
+                    Image = Image.FromFile($@"{path}\tailUp.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(tailUp);
+            }
+            else if (downTail)
+            {
+                var tailDown = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[sl].x * 50, SnakeBody[sl].y * 50),
+                    Image = Image.FromFile($@"{path}\tailDown.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(tailDown);
+            }
+            else if (leftTail)
+            {
+                var tailLeft = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[sl].x * 50, SnakeBody[sl].y * 50),
+                    Image = Image.FromFile($@"{path}\tailLeft.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(tailLeft);
+            }
+            else if (rightTail)
+            {
+                var tailRight = new PictureBox
+                {
+                    Size = new Size(50, 50),
+                    Location = new Point(SnakeBody[sl].x * 50, SnakeBody[sl].y * 50),
+                    Image = Image.FromFile($@"{path}\tailRight.png"),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                };
+                this.Controls.Add(tailRight);
             }
         }
     }

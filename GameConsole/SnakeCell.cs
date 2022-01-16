@@ -10,12 +10,10 @@ namespace GameConsole
     {
         public int x { get; set; }
         public int y { get; set; }
-        public int location { get; set; }
-        public SnakeCell(int X, int Y, int Location)
+        public SnakeCell(int X, int Y)
         {
             this.x = X;
             this.y = Y;
-            this.location = Location;
         }
     }
 }
