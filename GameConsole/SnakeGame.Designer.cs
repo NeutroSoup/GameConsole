@@ -31,16 +31,11 @@ namespace GameConsole
         {
             this.components = new System.ComponentModel.Container();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
-            this.ControlsTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // GameTimer
             // 
             this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
-            // 
-            // ControlsTimer
-            // 
-            this.ControlsTimer.Tick += new System.EventHandler(this.ControlsTimer_Tick);
             // 
             // SnakeGame
             // 
@@ -57,6 +52,5 @@ namespace GameConsole
         #endregion
 
         private System.Windows.Forms.Timer GameTimer;
-        private System.Windows.Forms.Timer ControlsTimer;
     }
 }
