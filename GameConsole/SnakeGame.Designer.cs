@@ -30,21 +30,58 @@ namespace GameConsole
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SnakeGame));
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
+            this.SnakeImages = new System.Windows.Forms.ImageList(this.components);
+            this.PbArena = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.PbArena)).BeginInit();
             this.SuspendLayout();
             // 
             // GameTimer
             // 
             this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
+            // SnakeImages
+            // 
+            this.SnakeImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("SnakeImages.ImageStream")));
+            this.SnakeImages.TransparentColor = System.Drawing.Color.Transparent;
+            this.SnakeImages.Images.SetKeyName(0, "apple.png");
+            this.SnakeImages.Images.SetKeyName(1, "headDown.png");
+            this.SnakeImages.Images.SetKeyName(2, "headLeft.png");
+            this.SnakeImages.Images.SetKeyName(3, "HeadRight.png");
+            this.SnakeImages.Images.SetKeyName(4, "headUp.png");
+            this.SnakeImages.Images.SetKeyName(5, "horizontal.png");
+            this.SnakeImages.Images.SetKeyName(6, "tailDown.png");
+            this.SnakeImages.Images.SetKeyName(7, "tailLeft.png");
+            this.SnakeImages.Images.SetKeyName(8, "tailRight.png");
+            this.SnakeImages.Images.SetKeyName(9, "tailUp.png");
+            this.SnakeImages.Images.SetKeyName(10, "turnDownLeft.png");
+            this.SnakeImages.Images.SetKeyName(11, "turnDownRight.png");
+            this.SnakeImages.Images.SetKeyName(12, "turnUpLeft.png");
+            this.SnakeImages.Images.SetKeyName(13, "turnUpRight.png");
+            this.SnakeImages.Images.SetKeyName(14, "vertical.png");
+            this.SnakeImages.Images.SetKeyName(15, "grass.png");
+            this.SnakeImages.Images.SetKeyName(16, "darkGrass.png");
+            // 
+            // PbArena
+            // 
+            this.PbArena.Location = new System.Drawing.Point(0, 0);
+            this.PbArena.Name = "PbArena";
+            this.PbArena.Size = new System.Drawing.Size(850, 850);
+            this.PbArena.TabIndex = 0;
+            this.PbArena.TabStop = false;
+            // 
             // SnakeGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 961);
+            this.ClientSize = new System.Drawing.Size(849, 848);
+            this.Controls.Add(this.PbArena);
             this.Name = "SnakeGame";
             this.Text = "SnakeGame";
             this.Load += new System.EventHandler(this.SnakeGame_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SnakeGame_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.PbArena)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -52,5 +89,7 @@ namespace GameConsole
         #endregion
 
         private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.ImageList SnakeImages;
+        private System.Windows.Forms.PictureBox PbArena;
     }
 }
