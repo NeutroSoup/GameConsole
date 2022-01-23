@@ -46,22 +46,22 @@ namespace GameConsole
             this.SnakeImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("SnakeImages.ImageStream")));
             this.SnakeImages.TransparentColor = System.Drawing.Color.Transparent;
             this.SnakeImages.Images.SetKeyName(0, "apple.png");
-            this.SnakeImages.Images.SetKeyName(1, "headDown.png");
-            this.SnakeImages.Images.SetKeyName(2, "headLeft.png");
-            this.SnakeImages.Images.SetKeyName(3, "HeadRight.png");
-            this.SnakeImages.Images.SetKeyName(4, "headUp.png");
-            this.SnakeImages.Images.SetKeyName(5, "horizontal.png");
-            this.SnakeImages.Images.SetKeyName(6, "tailDown.png");
-            this.SnakeImages.Images.SetKeyName(7, "tailLeft.png");
-            this.SnakeImages.Images.SetKeyName(8, "tailRight.png");
-            this.SnakeImages.Images.SetKeyName(9, "tailUp.png");
-            this.SnakeImages.Images.SetKeyName(10, "turnDownLeft.png");
-            this.SnakeImages.Images.SetKeyName(11, "turnDownRight.png");
-            this.SnakeImages.Images.SetKeyName(12, "turnUpLeft.png");
-            this.SnakeImages.Images.SetKeyName(13, "turnUpRight.png");
-            this.SnakeImages.Images.SetKeyName(14, "vertical.png");
-            this.SnakeImages.Images.SetKeyName(15, "grass.png");
-            this.SnakeImages.Images.SetKeyName(16, "darkGrass.png");
+            this.SnakeImages.Images.SetKeyName(1, "darkGrass.png");
+            this.SnakeImages.Images.SetKeyName(2, "grass.png");
+            this.SnakeImages.Images.SetKeyName(3, "headDown.png");
+            this.SnakeImages.Images.SetKeyName(4, "headLeft.png");
+            this.SnakeImages.Images.SetKeyName(5, "HeadRight.png");
+            this.SnakeImages.Images.SetKeyName(6, "headUp.png");
+            this.SnakeImages.Images.SetKeyName(7, "horizontal.png");
+            this.SnakeImages.Images.SetKeyName(8, "tailDown.png");
+            this.SnakeImages.Images.SetKeyName(9, "tailLeft.png");
+            this.SnakeImages.Images.SetKeyName(10, "tailRight.png");
+            this.SnakeImages.Images.SetKeyName(11, "tailUp.png");
+            this.SnakeImages.Images.SetKeyName(12, "turnDownLeft.png");
+            this.SnakeImages.Images.SetKeyName(13, "turnDownRight.png");
+            this.SnakeImages.Images.SetKeyName(14, "turnUpLeft.png");
+            this.SnakeImages.Images.SetKeyName(15, "turnUpRight.png");
+            this.SnakeImages.Images.SetKeyName(16, "vertical.png");
             // 
             // PbArena
             // 
@@ -75,9 +75,11 @@ namespace GameConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::GameConsole.Properties.Resources.darkGrass;
             this.ClientSize = new System.Drawing.Size(849, 848);
             this.Controls.Add(this.PbArena);
             this.Name = "SnakeGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SnakeGame";
             this.Load += new System.EventHandler(this.SnakeGame_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SnakeGame_KeyDown);

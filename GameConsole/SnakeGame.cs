@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Threading;
 namespace GameConsole
 {
     public partial class SnakeGame : Form
@@ -25,23 +26,21 @@ namespace GameConsole
 
         Bitmap Arena;
         Graphics g;
-
-        public SnakeGame()
+        public int gameSpeed { get; set; }
+        public SnakeGame(int GameSpeed)
         {
             InitializeComponent();
+            this.gameSpeed = GameSpeed;
         }
 
         private void SnakeGame_Load(object sender, EventArgs e)
         {
             GameTimer.Enabled = true;
-            GameTimer.Interval = 200;
+            GameTimer.Interval = gameSpeed;
             SnakeSpawn();
             Arena = new Bitmap(PbArena.Width, PbArena.Height);
             g = Graphics.FromImage(Arena);
-            //Image headUp = SnakeImages.Images["headUp.png"];
-            //Image tailUp = SnakeImages.Images["tailUp.png"];
-            //g.DrawImage(headUp, 0, 0);
-            //g.DrawImage(tailUp, 0, 50);
+            PbArena.Image = Arena;
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
@@ -109,6 +108,7 @@ namespace GameConsole
                 {
                     moveAngle = "left";
                     canMove = false;
+
                 }
                 if (key == Keys.D && moveAngle != "left")
                 {
@@ -178,7 +178,7 @@ namespace GameConsole
             {
                 result = true;
             }
-            for (int i = 2; i <= snakeLength; i++)
+            for (int i = 3; i <= snakeLength; i++)
             {
                 if (SnakeBody[0].x == SnakeBody[i].x && SnakeBody[0].y == SnakeBody[i].y)
                 {
@@ -190,7 +190,10 @@ namespace GameConsole
         private void Lose()
         {
             MessageBox.Show($"You lost! Your score: {snakeLength}");
-            Application.Exit();
+            MainMenu mn = new MainMenu();
+            this.Close();
+            mn.Visible = true;
+
         }
         private void DrawSnake()
         {
@@ -293,7 +296,7 @@ namespace GameConsole
                 {
                     if (x == 0 || y == 0 || x == mapX + 1 || y == mapY + 1)
                     {
-                        Image darkGrass = SnakeImages.Images["darkGrass.png"];
+                        var darkGrass = SnakeImages.Images["darkGrass.png"];
                         g.DrawImage(darkGrass, x * 50, y * 50);
                     }
                     else
