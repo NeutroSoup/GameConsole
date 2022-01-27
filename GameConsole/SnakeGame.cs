@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
+//using System.Windows.Input;
 using System.Threading;
 namespace GameConsole
 {
     public partial class SnakeGame : Form
     {
+
         byte mapX = 15;
         byte mapY = 15;
         byte appleX;
@@ -26,13 +27,14 @@ namespace GameConsole
 
         Bitmap Arena;
         Graphics g;
+
+        Sounds Sounds = new Sounds();
         public int gameSpeed { get; set; }
         public SnakeGame(int GameSpeed)
         {
             InitializeComponent();
             this.gameSpeed = GameSpeed;
         }
-
         private void SnakeGame_Load(object sender, EventArgs e)
         {
             GameTimer.Enabled = true;
@@ -116,7 +118,6 @@ namespace GameConsole
                     canMove = false;
                 }
             }
-
         }
         private void Apple()
         {
@@ -157,8 +158,10 @@ namespace GameConsole
         {
             if (SnakeBody[0].x == appleX && SnakeBody[0].y == appleY)
             {
+                Sounds.AppleSound();
                 SnakeBody.Add(new SnakeCell(SnakeBody[snakeLength].x, SnakeBody[snakeLength].x));
                 snakeLength++;
+                lbScore.Text = $"Score: {snakeLength-2}";
                 isAppleOnMap = false;
             }
         }

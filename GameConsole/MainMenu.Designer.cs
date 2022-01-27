@@ -46,9 +46,10 @@ namespace GameConsole
             this.btnSnEasy = new System.Windows.Forms.Button();
             this.btnSnMedium = new System.Windows.Forms.Button();
             this.PanelOptions = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnVolume = new System.Windows.Forms.Button();
+            this.btnWindowMode = new System.Windows.Forms.Button();
+            this.btnSoundEffects = new System.Windows.Forms.Button();
+            this.btnMusic = new System.Windows.Forms.Button();
             this.PanelMenuButtons.SuspendLayout();
             this.PanelGames.SuspendLayout();
             this.PanelSnakeDiff.SuspendLayout();
@@ -294,70 +295,97 @@ namespace GameConsole
             // 
             this.PanelOptions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PanelOptions.AutoSize = true;
-            this.PanelOptions.Controls.Add(this.button1);
-            this.PanelOptions.Controls.Add(this.button2);
-            this.PanelOptions.Controls.Add(this.button3);
+            this.PanelOptions.Controls.Add(this.btnMusic);
+            this.PanelOptions.Controls.Add(this.btnSoundEffects);
+            this.PanelOptions.Controls.Add(this.btnVolume);
+            this.PanelOptions.Controls.Add(this.btnWindowMode);
             this.PanelOptions.Location = new System.Drawing.Point(306, 96);
             this.PanelOptions.Name = "PanelOptions";
-            this.PanelOptions.Size = new System.Drawing.Size(236, 399);
+            this.PanelOptions.Size = new System.Drawing.Size(236, 468);
             this.PanelOptions.TabIndex = 5;
             this.PanelOptions.Visible = false;
             // 
-            // button1
+            // btnVolume
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Impact", 36F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = global::GameConsole.Properties.Resources.button;
-            this.button1.Location = new System.Drawing.Point(0, 155);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(233, 73);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "EXIT";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnVolume.BackColor = System.Drawing.Color.Transparent;
+            this.btnVolume.CausesValidation = false;
+            this.btnVolume.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnVolume.FlatAppearance.BorderSize = 0;
+            this.btnVolume.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnVolume.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnVolume.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolume.Font = new System.Drawing.Font("Impact", 25F);
+            this.btnVolume.ForeColor = System.Drawing.Color.White;
+            this.btnVolume.Image = global::GameConsole.Properties.Resources.button;
+            this.btnVolume.Location = new System.Drawing.Point(0, 0);
+            this.btnVolume.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVolume.Name = "btnVolume";
+            this.btnVolume.Size = new System.Drawing.Size(233, 73);
+            this.btnVolume.TabIndex = 1;
+            this.btnVolume.Text = "VOLUME: 100%";
+            this.btnVolume.UseVisualStyleBackColor = false;
+            this.btnVolume.Click += new System.EventHandler(this.btnVolume_Click);
             // 
-            // button2
+            // btnWindowMode
             // 
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.CausesValidation = false;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Impact", 36F);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Image = global::GameConsole.Properties.Resources.button;
-            this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(233, 73);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "PLAY";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnWindowMode.BackColor = System.Drawing.Color.Transparent;
+            this.btnWindowMode.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.btnWindowMode.FlatAppearance.BorderSize = 0;
+            this.btnWindowMode.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnWindowMode.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnWindowMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWindowMode.Font = new System.Drawing.Font("Impact", 18F);
+            this.btnWindowMode.ForeColor = System.Drawing.Color.White;
+            this.btnWindowMode.Image = global::GameConsole.Properties.Resources.button;
+            this.btnWindowMode.Location = new System.Drawing.Point(0, 231);
+            this.btnWindowMode.Name = "btnWindowMode";
+            this.btnWindowMode.Size = new System.Drawing.Size(233, 73);
+            this.btnWindowMode.TabIndex = 2;
+            this.btnWindowMode.Text = "WINDOW MODE: MINIMIZED";
+            this.btnWindowMode.UseVisualStyleBackColor = false;
+            this.btnWindowMode.Click += new System.EventHandler(this.btnWindowMode_Click);
             // 
-            // button3
+            // btnSoundEffects
             // 
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Impact", 36F);
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Image = global::GameConsole.Properties.Resources.button;
-            this.button3.Location = new System.Drawing.Point(0, 76);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(233, 73);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "OPTIONS";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnSoundEffects.BackColor = System.Drawing.Color.Transparent;
+            this.btnSoundEffects.CausesValidation = false;
+            this.btnSoundEffects.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSoundEffects.FlatAppearance.BorderSize = 0;
+            this.btnSoundEffects.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSoundEffects.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSoundEffects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSoundEffects.Font = new System.Drawing.Font("Impact", 19F);
+            this.btnSoundEffects.ForeColor = System.Drawing.Color.White;
+            this.btnSoundEffects.Image = global::GameConsole.Properties.Resources.button;
+            this.btnSoundEffects.Location = new System.Drawing.Point(0, 77);
+            this.btnSoundEffects.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSoundEffects.Name = "btnSoundEffects";
+            this.btnSoundEffects.Size = new System.Drawing.Size(233, 73);
+            this.btnSoundEffects.TabIndex = 3;
+            this.btnSoundEffects.Text = "SOUND EFFECTS: ON";
+            this.btnSoundEffects.UseVisualStyleBackColor = false;
+            this.btnSoundEffects.Click += new System.EventHandler(this.btnSoundEffects_Click);
+            // 
+            // btnMusic
+            // 
+            this.btnMusic.BackColor = System.Drawing.Color.Transparent;
+            this.btnMusic.CausesValidation = false;
+            this.btnMusic.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnMusic.FlatAppearance.BorderSize = 0;
+            this.btnMusic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnMusic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnMusic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMusic.Font = new System.Drawing.Font("Impact", 25F);
+            this.btnMusic.ForeColor = System.Drawing.Color.White;
+            this.btnMusic.Image = global::GameConsole.Properties.Resources.button;
+            this.btnMusic.Location = new System.Drawing.Point(0, 155);
+            this.btnMusic.Margin = new System.Windows.Forms.Padding(0);
+            this.btnMusic.Name = "btnMusic";
+            this.btnMusic.Size = new System.Drawing.Size(233, 73);
+            this.btnMusic.TabIndex = 4;
+            this.btnMusic.Text = "MUSIC: ON";
+            this.btnMusic.UseVisualStyleBackColor = false;
+            this.btnMusic.Click += new System.EventHandler(this.btnMusic_Click);
             // 
             // MainMenu
             // 
@@ -401,8 +429,9 @@ namespace GameConsole
         private System.Windows.Forms.Button btnSnEasy;
         private System.Windows.Forms.Button btnSnMedium;
         private System.Windows.Forms.Panel PanelOptions;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnVolume;
+        private System.Windows.Forms.Button btnWindowMode;
+        private System.Windows.Forms.Button btnMusic;
+        private System.Windows.Forms.Button btnSoundEffects;
     }
 }
