@@ -13,6 +13,7 @@ namespace GameConsole
 {
     public partial class MainMenu : Form
     {
+        double vol = 1;
         Sounds Sounds = new Sounds();
         public MainMenu()
         {
@@ -87,7 +88,7 @@ namespace GameConsole
             string screenSize = string.Empty;
             if (btnWindowMode.Text == "WINDOW MODE: MINIMIZED") { screenSize = "MIN"; }
             if (btnWindowMode.Text == "WINDOW MODE: MAXIMIZED") { screenSize = "MAX"; }
-            SnakeGame sg = new SnakeGame(diff, screenSize);
+            SnakeGame sg = new SnakeGame(diff, screenSize, vol);
             this.Visible = false;
             sg.Show();
         }
@@ -101,11 +102,12 @@ namespace GameConsole
 
         private void btnVolume_Click(object sender, EventArgs e)
         {
-            if (btnVolume.Text == "VOLUME: 100%") { btnVolume.Text = "VOLUME: 0%"; Sounds.ChangeVolume(0); }
-            else if (btnVolume.Text == "VOLUME: 0%") { btnVolume.Text = "VOLUME: 25%"; Sounds.ChangeVolume(0.25); }
-            else if (btnVolume.Text == "VOLUME: 25%") { btnVolume.Text = "VOLUME: 50%"; Sounds.ChangeVolume(0.5); }
-            else if (btnVolume.Text == "VOLUME: 50%") { btnVolume.Text = "VOLUME: 75%"; Sounds.ChangeVolume(0.75); }
-            else if (btnVolume.Text == "VOLUME: 75%") { btnVolume.Text = "VOLUME: 100%"; Sounds.ChangeVolume(1); }
+            if (btnVolume.Text == "VOLUME: 100%") { btnVolume.Text = "VOLUME: 0%"; vol = 0; }
+            else if (btnVolume.Text == "VOLUME: 0%") { btnVolume.Text = "VOLUME: 25%"; vol = 0.25; }
+            else if (btnVolume.Text == "VOLUME: 25%") { btnVolume.Text = "VOLUME: 50%"; vol = 0.5; }
+            else if (btnVolume.Text == "VOLUME: 50%") { btnVolume.Text = "VOLUME: 75%"; vol = 0.75; }
+            else if (btnVolume.Text == "VOLUME: 75%") { btnVolume.Text = "VOLUME: 100%"; vol = 1; }
+            Sounds.ChangeVolume(vol);
             Sounds.SelectSound();
         }
 

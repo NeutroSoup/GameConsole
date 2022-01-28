@@ -20,7 +20,7 @@ namespace GameConsole
         byte appleX;
         byte appleY;
         int snakeLength;
-        List<SnakeCell> SnakeBody = new List<SnakeCell>();
+        List<SnakeCell> SnakeBody; 
         string moveAngle;
         bool isAppleOnMap;
         bool canMove = true;
@@ -28,39 +28,34 @@ namespace GameConsole
 
         Bitmap Arena;
         Graphics g;
-
         Sounds Sounds = new Sounds();
         public int gameSpeed { get; set; }
-        public string ScreenSize { get; set; }
-        public SnakeGame(int GameSpeed, string ScreenSize)
+        public string screenSize { get; set; }
+        public SnakeGame(int GameSpeed, string ScreenSize, double Volume)
         {
             InitializeComponent();
             this.gameSpeed = GameSpeed;
             if (ScreenSize == "MIN")
             {
-                this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Normal;
+                panelSnake.Location = new Point((this.Size.Width - 850) / 2, (this.Size.Height - 850) / 2);
             }
             else if (ScreenSize == "MAX")
             {
                 this.WindowState = FormWindowState.Maximized;
                 panelSnake.Location = new Point((X - 850) / 2, (Y - 850) / 2);
             }
-
+            Sounds.ChangeVolume(Volume);
         }
         private void SnakeGame_Load(object sender, EventArgs e)
         {
-            GameTimer.Enabled = true;
-            GameTimer.Interval = gameSpeed;
             SnakeSpawn();
-            Arena = new Bitmap(PbArena.Width, PbArena.Height);
-            g = Graphics.FromImage(Arena);
-            PbArena.Image = Arena;
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            canMove = true;
             if (!Death())
             {
-                canMove = true;
                 g.Clear(Color.White);
                 SnakeMove();
                 DrawBackground();
@@ -105,31 +100,31 @@ namespace GameConsole
         }
         private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (canMove)
-            //{
-            Keys key = e.KeyCode;
-            if (key == Keys.W && moveAngle != "down")
+            if (canMove)
             {
-                moveAngle = "up";
-                canMove = false;
-            }
-            if (key == Keys.S && moveAngle != "up")
-            {
-                moveAngle = "down";
-                canMove = false;
-            }
-            if (key == Keys.A && moveAngle != "right")
-            {
-                moveAngle = "left";
-                canMove = false;
+                Keys key = e.KeyCode;
+                if (key == Keys.W && moveAngle != "down")
+                {
+                    moveAngle = "up";
+                    canMove = false;
+                }
+                if (key == Keys.S && moveAngle != "up")
+                {
+                    moveAngle = "down";
+                    canMove = false;
+                }
+                if (key == Keys.A && moveAngle != "right")
+                {
+                    moveAngle = "left";
+                    canMove = false;
 
+                }
+                if (key == Keys.D && moveAngle != "left")
+                {
+                    moveAngle = "right";
+                    canMove = false;
+                }
             }
-            if (key == Keys.D && moveAngle != "left")
-            {
-                moveAngle = "right";
-                canMove = false;
-            }
-            //}
         }
         private void Apple()
         {
@@ -179,9 +174,18 @@ namespace GameConsole
         }
         private void SnakeSpawn()
         {
+
+            GameTimer.Enabled = true;
+            GameTimer.Interval = gameSpeed;
+            Arena = new Bitmap(PbArena.Width, PbArena.Height);
+            g = Graphics.FromImage(Arena);
+            PbArena.Image = Arena;
+
             snakeLength = 2;
             moveAngle = "up";
             isAppleOnMap = false;
+            canMove = true;
+            SnakeBody = new List<SnakeCell>();
             SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 3));
             SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 2));
             SnakeBody.Add(new SnakeCell(mapX / 2, mapY - 1));
@@ -204,11 +208,8 @@ namespace GameConsole
         }
         private void Lose()
         {
-            MessageBox.Show($"You lost! Your score: {snakeLength}");
-            MainMenu mn = new MainMenu();
-            this.Close();
-            mn.Visible = true;
-
+            panelLose.Visible = true;
+            labelFinalScore.Text = $"YOU LOST! FINAL SCORE: {snakeLength - 2}";
         }
         private void DrawSnake()
         {
@@ -323,10 +324,21 @@ namespace GameConsole
                 }
             }
         }
-
         private void PbArena_Click(object sender, EventArgs e)
         {
 
+        }
+        private void btnPlayAgain_Click(object sender, EventArgs e)
+        {
+            panelLose.Visible = false;
+            SnakeSpawn();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            MainMenu mn = new MainMenu();
+            this.Close();
+            mn.Visible = true;
         }
     }
 }

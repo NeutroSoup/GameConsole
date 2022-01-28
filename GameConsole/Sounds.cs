@@ -11,10 +11,9 @@ namespace GameConsole
     class Sounds
     {
         public MediaPlayer sound = new MediaPlayer();
-        SoundPlayer song = new SoundPlayer(@"C:\Users\Vilius\Desktop\bcSong.wav");
+        SoundPlayer song = new SoundPlayer(@"C:\Users\Admin\Desktop\asfas\GameConsole\Resources\GameConsoleSprites\bcSong.wav");
         public bool boolSounds = true;
         public bool boolSong = true;
-        public double Volume;
         public Sounds()
         {
 
@@ -34,7 +33,7 @@ namespace GameConsole
         {
             if (boolSounds)
             {
-                sound.Open(new Uri(@"C:\Users\Vilius\Desktop\blipSelect.wav"));
+                sound.Open(new Uri(@"C:\Users\Admin\Desktop\asfas\GameConsole\Resources\GameConsoleSprites\blipSelect.wav"));
                 sound.Play();
             }
         }
@@ -42,7 +41,7 @@ namespace GameConsole
         {
             if (boolSounds)
             {
-                sound.Open(new Uri(@"C:\Users\Vilius\Desktop\apple.wav"));
+                sound.Open(new Uri(@"C:\Users\Admin\Desktop\asfas\GameConsole\Resources\GameConsoleSprites\apple.wav"));
                 sound.Play();
             }
         }
