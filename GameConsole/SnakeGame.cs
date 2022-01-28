@@ -13,7 +13,8 @@ namespace GameConsole
 {
     public partial class SnakeGame : Form
     {
-
+        int X = Screen.PrimaryScreen.Bounds.Width;
+        int Y = Screen.PrimaryScreen.Bounds.Height;
         byte mapX = 15;
         byte mapY = 15;
         byte appleX;
@@ -30,10 +31,21 @@ namespace GameConsole
 
         Sounds Sounds = new Sounds();
         public int gameSpeed { get; set; }
-        public SnakeGame(int GameSpeed)
+        public string ScreenSize { get; set; }
+        public SnakeGame(int GameSpeed, string ScreenSize)
         {
             InitializeComponent();
             this.gameSpeed = GameSpeed;
+            if (ScreenSize == "MIN")
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else if (ScreenSize == "MAX")
+            {
+                this.WindowState = FormWindowState.Maximized;
+                panelSnake.Location = new Point((X - 850) / 2, (Y - 850) / 2);
+            }
+
         }
         private void SnakeGame_Load(object sender, EventArgs e)
         {
@@ -93,31 +105,31 @@ namespace GameConsole
         }
         private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
         {
-            if (canMove)
+            //if (canMove)
+            //{
+            Keys key = e.KeyCode;
+            if (key == Keys.W && moveAngle != "down")
             {
-                Keys key = e.KeyCode;
-                if (key == Keys.W && moveAngle != "down")
-                {
-                    moveAngle = "up";
-                    canMove = false;
-                }
-                if (key == Keys.S && moveAngle != "up")
-                {
-                    moveAngle = "down";
-                    canMove = false;
-                }
-                if (key == Keys.A && moveAngle != "right")
-                {
-                    moveAngle = "left";
-                    canMove = false;
-
-                }
-                if (key == Keys.D && moveAngle != "left")
-                {
-                    moveAngle = "right";
-                    canMove = false;
-                }
+                moveAngle = "up";
+                canMove = false;
             }
+            if (key == Keys.S && moveAngle != "up")
+            {
+                moveAngle = "down";
+                canMove = false;
+            }
+            if (key == Keys.A && moveAngle != "right")
+            {
+                moveAngle = "left";
+                canMove = false;
+
+            }
+            if (key == Keys.D && moveAngle != "left")
+            {
+                moveAngle = "right";
+                canMove = false;
+            }
+            //}
         }
         private void Apple()
         {
@@ -161,7 +173,7 @@ namespace GameConsole
                 Sounds.AppleSound();
                 SnakeBody.Add(new SnakeCell(SnakeBody[snakeLength].x, SnakeBody[snakeLength].x));
                 snakeLength++;
-                lbScore.Text = $"Score: {snakeLength-2}";
+                lbScore.Text = $"Score: {snakeLength - 2}";
                 isAppleOnMap = false;
             }
         }
@@ -310,6 +322,11 @@ namespace GameConsole
                     }
                 }
             }
+        }
+
+        private void PbArena_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

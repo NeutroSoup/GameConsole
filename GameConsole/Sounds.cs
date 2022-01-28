@@ -14,6 +14,7 @@ namespace GameConsole
         SoundPlayer song = new SoundPlayer(@"C:\Users\Vilius\Desktop\bcSong.wav");
         public bool boolSounds = true;
         public bool boolSong = true;
+        public double Volume;
         public Sounds()
         {
 
@@ -44,6 +45,10 @@ namespace GameConsole
                 sound.Open(new Uri(@"C:\Users\Vilius\Desktop\apple.wav"));
                 sound.Play();
             }
+        }
+        public void ChangeVolume(double Volume)
+        {
+            sound.Volume = Volume;
         }
     }
 }
